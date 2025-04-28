@@ -27,32 +27,11 @@ body {
   overflow-x: hidden;
 }
 
-/* ========== LOADER ========== */
-.page-loader {
-  position: fixed;
-  top: 0;
-  left: 0;
+.container {
   width: 100%;
-  height: 100%;
-  background: white;
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.5s ease;
-}
-
-.loader-spinner {
-  width: 50px;
-  height: 50px;
-  border: 3px solid rgba(0,0,0,0.1);
-  border-radius: 50%;
-  border-top-color: var(--color-primary);
-  animation: spin 1s ease-in-out infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 /* ========== TYPOGRAPHY ========== */
@@ -79,48 +58,140 @@ a:hover {
   color: var(--color-accent);
 }
 
-/* ========== LAYOUT ========== */
-.container {
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-.main-content {
-  padding-top: 30px;
-  padding-bottom: 60px;
-  min-height: 60vh;
-}
-
 /* ========== BUTTONS ========== */
-.btn {
+.button {
   display: inline-block;
   padding: 12px 30px;
-  background: var(--color-primary);
-  color: white;
-  border: none;
   border-radius: var(--border-radius);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 1px;
   cursor: pointer;
   transition: var(--transition);
+  border: none;
+}
+
+.button--primary {
+  background: var(--color-primary);
+  color: white;
   box-shadow: var(--box-shadow);
 }
 
-.btn:hover {
+.button--primary:hover {
   background: var(--color-accent);
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
-.btn-secondary {
-  background: var(--color-secondary);
+.button--secondary {
+  background: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+}
+
+.button--secondary:hover {
+  background: var(--color-primary);
+  color: white;
+}
+
+/* ========== HEADER ========== */
+.header {
+  padding: 20px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.header__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__logo img {
+  max-width: 120px;
+}
+
+.header__menu {
+  display: flex;
+  list-style: none;
+}
+
+.header__menu-item {
+  margin: 0 15px;
+}
+
+.header__menu-link {
+  font-weight: 500;
+  position: relative;
+}
+
+.header__menu-link:after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-primary);
+  transition: var(--transition);
+}
+
+.header__menu-link:hover:after {
+  width: 100%;
+}
+
+.header__cart {
+  position: relative;
+}
+
+.header__cart-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--color-primary);
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.header__mobile-menu {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
+  .header__nav {
+    display: none;
+  }
+  
+  .header__mobile-menu {
+    display: block;
+  }
+  
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .categories-grid {
+    grid-template-columns: 1fr;
+  }
+  
   h1 { font-size: 2rem; }
   h2 { font-size: 1.75rem; }
   

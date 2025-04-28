@@ -1,15 +1,117 @@
-<div class="hero-banner" style="background-color: {{ section.settings.bg_color }};">
+{%- style -%}
+  .hero {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background-color: {{ section.settings.background }};
+    color: {{ section.settings.text_color }};
+    padding-top: 100px;
+  }
+  
+  .hero__content {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .hero__label {
+    display: inline-block;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    color: {{ section.settings.accent_color }};
+  }
+  
+  .hero__title {
+    font-size: 3.5rem;
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+  
+  .hero__title .highlight {
+    color: {{ section.settings.accent_color }};
+  }
+  
+  .hero__subtitle {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin-bottom: 30px;
+  }
+  
+  .hero__image {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50%;
+    max-width: 700px;
+  }
+  
+  @media (max-width: 768px) {
+    .hero {
+      text-align: center;
+      padding-top: 120px;
+      padding-bottom: 80px;
+      min-height: auto;
+    }
+    
+    .hero__title {
+      font-size: 2.5rem;
+    }
+    
+    .hero__image {
+      position: relative;
+      width: 100%;
+      margin-top: 40px;
+      transform: none;
+      right: auto;
+      top: auto;
+    }
+  }
+{%- endstyle -%}
+
+<div class="hero">
   <div class="container">
-    <div class="hero-content">
-      <h1>{{ section.settings.title }}</h1>
-      <p>{{ section.settings.subtitle }}</p>
-      <a href="{{ section.settings.button_link }}" class="btn">
-        {{ section.settings.button_text }}
-      </a>
+    <div class="hero__content">
+      {% if section.settings.label != blank %}
+        <span class="hero__label">{{ section.settings.label }}</span>
+      {% endif %}
+      
+      <h1 class="hero__title">
+        {{ section.settings.title | replace: '[highlight]', '<span class="highlight">' | replace: '[/highlight]', '</span>' }}
+      </h1>
+      
+      {% if section.settings.subtitle != blank %}
+        <p class="hero__subtitle">{{ section.settings.subtitle }}</p>
+      {% endif %}
+      
+      <div class="hero__buttons">
+        <a href="{{ section.settings.button_link }}" class="button button--primary">
+          {{ section.settings.button_text }}
+        </a>
+        
+        {% if section.settings.secondary_button_text != blank %}
+          <a href="{{ section.settings.secondary_button_link }}" class="button button--secondary">
+            {{ section.settings.secondary_button_text }}
+          </a>
+        {% endif %}
+      </div>
+      
+      <div class="hero__trust-badges">
+        {% for block in section.blocks %}
+          <div class="trust-badge">
+            <i class="{{ block.settings.icon }}"></i>
+            <span>{{ block.settings.text }}</span>
+          </div>
+        {% endfor %}
+      </div>
     </div>
+    
     {% if section.settings.image %}
-      <div class="hero-image">
-        <img src="{{ section.settings.image | img_url: '1000x' }}" alt="{{ section.settings.title }}">
+      <div class="hero__image">
+        <img src="{{ section.settings.image | img_url: '1000x' }}" alt="{{ section.settings.title | escape }}" loading="lazy">
       </div>
     {% endif %}
   </div>
@@ -20,27 +122,28 @@
   "name": "Hero Banner",
   "settings": [
     {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Image"
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Clean Beauty for Everyone"
     },
     {
       "type": "text",
       "id": "title",
-      "label": "Heading",
-      "default": "Welcome to our store"
+      "label": "Title",
+      "default": "Discover Your [highlight]Natural Glow[/highlight]"
     },
     {
-      "type": "text",
+      "type": "textarea",
       "id": "subtitle",
-      "label": "Subheading",
-      "default": "Discover amazing products"
+      "label": "Subtitle",
+      "default": "Premium beauty products crafted with care for every skin type. Our scientifically-backed formulas deliver visible results without compromise."
     },
     {
       "type": "text",
       "id": "button_text",
       "label": "Button text",
-      "default": "Shop Now"
+      "default": "Shop Collection"
     },
     {
       "type": "url",
@@ -48,10 +151,59 @@
       "label": "Button link"
     },
     {
+      "type": "text",
+      "id": "secondary_button_text",
+      "label": "Secondary button text",
+      "default": "Take Skin Quiz"
+    },
+    {
+      "type": "url",
+      "id": "secondary_button_link",
+      "label": "Secondary button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
       "type": "color",
-      "id": "bg_color",
+      "id": "background",
       "label": "Background color",
-      "default": "#f5f5f5"
+      "default": "#f9f5f0"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#8B5CF6"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_badge",
+      "name": "Trust Badge",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon class",
+          "default": "fas fa-check-circle",
+          "info": "Use Font Awesome icon classes"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Clean Ingredients"
+        }
+      ]
     }
   ],
   "presets": [

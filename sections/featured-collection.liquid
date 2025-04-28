@@ -1,11 +1,80 @@
-<div class="featured-collection">
+{%- style -%}
+  .featured-categories {
+    padding: 80px 0;
+  }
+  
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    margin-top: 50px;
+  }
+  
+  .category-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 300px;
+    transition: transform 0.3s ease;
+  }
+  
+  .category-card:hover {
+    transform: translateY(-10px);
+  }
+  
+  .category-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .category-card__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: white;
+  }
+  
+  .category-card__title {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+  }
+  
+  @media (max-width: 768px) {
+    .categories-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .categories-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{%- endstyle -%}
+
+<div class="featured-categories">
   <div class="container">
-    <h2 class="section-title">{{ section.settings.title }}</h2>
+    <div class="section-header">
+      <h2 class="section-title">{{ section.settings.title }}</h2>
+      <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+    </div>
     
-    <div class="product-grid">
-      {% assign collection = collections[section.settings.collection] %}
-      {% for product in collection.products limit: section.settings.product_count %}
-        {% render 'product-card', product: product %}
+    <div class="categories-grid">
+      {% for block in section.blocks %}
+        <a href="{{ block.settings.link }}" class="category-card">
+          {% if block.settings.image %}
+            <img src="{{ block.settings.image | img_url: '600x' }}" alt="{{ block.settings.title }}" class="category-card__image" loading="lazy">
+          {% endif %}
+          
+          <div class="category-card__overlay">
+            <h3 class="category-card__title">{{ block.settings.title }}</h3>
+            <p class="category-card__count">{{ block.settings.count }}</p>
+          </div>
+        </a>
       {% endfor %}
     </div>
   </div>
@@ -13,33 +82,85 @@
 
 {% schema %}
 {
-  "name": "Featured Collection",
+  "name": "Featured Categories",
   "settings": [
     {
       "type": "text",
       "id": "title",
-      "label": "Heading",
-      "default": "Featured Products"
+      "label": "Title",
+      "default": "Shop By Category"
     },
     {
-      "type": "collection",
-      "id": "collection",
-      "label": "Collection"
-    },
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Explore our carefully curated collections for all your beauty needs"
+    }
+  ],
+  "blocks": [
     {
-      "type": "range",
-      "id": "product_count",
-      "label": "Number of products",
-      "min": 2,
-      "max": 12,
-      "step": 1,
-      "default": 4
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Skincare"
+        },
+        {
+          "type": "text",
+          "id": "count",
+          "label": "Product count",
+          "default": "24 Products"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "Featured Collection",
-      "category": "Collection"
+      "name": "Featured Categories",
+      "category": "Collection",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "title": "Skincare",
+            "count": "24 Products"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Makeup",
+            "count": "36 Products"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Hair Care",
+            "count": "18 Products"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Fragrances",
+            "count": "12 Products"
+          }
+        }
+      ]
     }
   ]
 }

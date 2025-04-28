@@ -7,9 +7,6 @@
   <meta name="theme-color" content="{{ settings.color_primary }}">
   <link rel="canonical" href="{{ canonical_url }}">
 
-  <!-- Critical Shopify Tags -->
-  {{ content_for_header }}
-
   <!-- Preconnect to important domains -->
   <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,6 +15,9 @@
   {% if settings.favicon %}
     <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
   {% endif %}
+
+  <!-- Critical Shopify Tags -->
+  {{ content_for_header }}
 
   <title>
     {{ page_title }}
@@ -31,7 +31,7 @@
   {% endif %}
 
   <!-- CSS -->
-  {{ 'theme.css' | asset_url | stylesheet_tag | replace: ' href=', ' data-prefetch href=' }}
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
   
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -64,20 +64,7 @@
   {% section 'footer' %}
 
   <!-- JavaScript -->
-  {{ 'vendor.min.js' | asset_url | script_tag | replace: ' src=', ' defer src=' }}
-  {{ 'theme.js' | asset_url | script_tag | replace: ' src=', ' defer src=' }}
-
-  <!-- Mobile Menu Overlay -->
-  <div class="mobile-menu-overlay"></div>
-
-  <!-- Quick View Modal -->
-  <div id="QuickViewModal" class="modal quick-view-modal"></div>
-
-  <!-- Cart Drawer -->
-  <div id="CartDrawer" class="cart-drawer drawer drawer--right">
-    <div class="cart-drawer__inner">
-      {% render 'cart-drawer' %}
-    </div>
-  </div>
+  {{ 'vendor.min.js' | asset_url | script_tag }}
+  {{ 'theme.js' | asset_url | script_tag }}
 </body>
 </html>
