@@ -1,0 +1,135 @@
+<div class="newsletter-section" style="background-color: {{ section.settings.bg_color }};">
+  <div class="container">
+    <div class="newsletter-inner">
+      <div class="newsletter-content">
+        <h2>{{ section.settings.heading }}</h2>
+        <p>{{ section.settings.subtext }}</p>
+      </div>
+      <div class="newsletter-form">
+        {% form 'customer', class: 'newsletter-form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="input-group">
+            <input type="email"
+                   name="contact[email]"
+                   id="NewsletterEmail"
+                   value="{{ form.email }}"
+                   placeholder="{{ section.settings.placeholder }}"
+                   autocorrect="off"
+                   autocapitalize="off">
+            <button type="submit" name="commit" aria-label="Subscribe">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+          {% if form.posted_successfully? %}
+            <p class="form-success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+          {% endif %}
+          {{ form.errors | default_errors }}
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Subscribe to our newsletter"
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Get the latest updates on new products and upcoming sales"
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Placeholder text",
+      "default": "Your email address"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#f5f5f5"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter",
+      "category": "Promotional"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+.newsletter-section {
+  padding: 50px 0;
+  margin: 50px 0;
+}
+
+.newsletter-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.newsletter-content {
+  flex: 1;
+  padding-right: 30px;
+}
+
+.newsletter-form {
+  flex: 1;
+}
+
+.input-group {
+  display: flex;
+}
+
+.input-group input {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px 0 0 4px;
+  font-size: 1rem;
+}
+
+.input-group button {
+  padding: 0 20px;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.input-group button:hover {
+  background: var(--color-accent);
+}
+
+@media (max-width: 768px) {
+  .newsletter-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .newsletter-content {
+    padding-right: 0;
+    margin-bottom: 20px;
+  }
+  
+  .input-group {
+    width: 100%;
+  }
+}
+</style>
