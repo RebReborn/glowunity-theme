@@ -1,32 +1,83 @@
 <!DOCTYPE html>
-<html lang="{{ shop.locale }}">
+<html lang="{{ shop.locale }}" class="no-js">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  
-  <!-- REQUIRED TAG - MUST BE IN HEAD SECTION -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="{{ settings.color_primary }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  <!-- Critical Shopify Tags -->
   {{ content_for_header }}
 
-  <title>{{ page_title }}</title>
+  <!-- Preconnect to important domains -->
+  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  
+  <!-- Favicon -->
+  {% if settings.favicon %}
+    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+  {% endif %}
+
+  <title>
+    {{ page_title }}
+    {% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}
+    {% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}
+    {% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+  </title>
 
   {% if page_description %}
     <meta name="description" content="{{ page_description | escape }}">
   {% endif %}
 
-  {{ 'theme.css' | asset_url | stylesheet_tag }}
+  <!-- CSS -->
+  {{ 'theme.css' | asset_url | stylesheet_tag | replace: ' href=', ' data-prefetch href=' }}
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body class="template-{{ template | split: '.' | first }} {% if customer %}customer-logged-in{% endif %}">
+  <!-- Loading Animation -->
+  <div class="page-loader">
+    <div class="loader-spinner"></div>
+  </div>
+
+  <!-- Announcement Bar -->
+  {% section 'announcement-bar' %}
+
+  <!-- Header -->
   {% section 'header' %}
 
-  <!-- REQUIRED TAG - MUST BE IN BODY SECTION -->
-  <main id="MainContent">
+  <!-- Main Content -->
+  <main id="MainContent" class="main-content" role="main">
     {{ content_for_layout }}
   </main>
 
+  <!-- Newsletter Section -->
+  {% section 'newsletter' %}
+
+  <!-- Footer -->
   {% section 'footer' %}
 
-  {{ 'theme.js' | asset_url | script_tag }}
+  <!-- JavaScript -->
+  {{ 'vendor.min.js' | asset_url | script_tag | replace: ' src=', ' defer src=' }}
+  {{ 'theme.js' | asset_url | script_tag | replace: ' src=', ' defer src=' }}
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay"></div>
+
+  <!-- Quick View Modal -->
+  <div id="QuickViewModal" class="modal quick-view-modal"></div>
+
+  <!-- Cart Drawer -->
+  <div id="CartDrawer" class="cart-drawer drawer drawer--right">
+    <div class="cart-drawer__inner">
+      {% render 'cart-drawer' %}
+    </div>
+  </div>
 </body>
 </html>
