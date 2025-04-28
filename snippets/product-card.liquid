@@ -6,10 +6,10 @@
     <div class="product-info">
       <h3>{{ product.title }}</h3>
       <div class="product-price">
+        {{ product.price | money }}
         {% if product.compare_at_price > product.price %}
           <span class="compare-price">{{ product.compare_at_price | money }}</span>
         {% endif %}
-        <span class="price">{{ product.price | money }}</span>
       </div>
     </div>
   </a>
