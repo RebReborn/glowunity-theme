@@ -1,56 +1,254 @@
 [
-    {
-      "name": "Theme settings",
-      "settings": [
-        {
-          "type": "header",
-          "content": "Header"
-        },
-        {
-          "type": "image_picker",
-          "id": "logo",
-          "label": "Logo image"
-        },
-        {
-          "type": "range",
-          "id": "logo_width",
-          "min": 50,
-          "max": 250,
-          "step": 10,
-          "unit": "px",
-          "label": "Logo width",
-          "default": 100
-        },
-        {
-          "type": "header",
-          "content": "Colors"
-        },
-        {
-          "type": "color",
-          "id": "color_primary",
-          "label": "Primary color",
-          "default": "#000000"
-        },
-        {
-          "type": "color",
-          "id": "color_secondary",
-          "label": "Secondary color",
-          "default": "#777777"
-        },
-        {
-          "type": "header",
-          "content": "Social media"
-        },
-        {
-          "type": "text",
-          "id": "social_facebook",
-          "label": "Facebook link"
-        },
-        {
-          "type": "text",
-          "id": "social_instagram",
-          "label": "Instagram link"
-        }
-      ]
-    }
-  ]
+  {
+    "name": "Theme settings",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Logo"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo image"
+      },
+      {
+        "type": "range",
+        "id": "logo_height",
+        "min": 30,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Logo height",
+        "default": 50
+      },
+      {
+        "type": "checkbox",
+        "id": "transparent_header",
+        "label": "Transparent header on homepage",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Colors"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary color",
+        "default": "#8B5CF6",
+        "info": "Used for buttons, links, and accents"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary",
+        "label": "Secondary color",
+        "default": "#3B82F6",
+        "info": "Used for secondary buttons and elements"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent color",
+        "default": "#EC4899",
+        "info": "Used for hover states and special accents"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text color",
+        "default": "#333333"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Background color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_header_bg",
+        "label": "Header background",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_header_text",
+        "label": "Header text",
+        "default": "#333333"
+      },
+      {
+        "type": "header",
+        "content": "Typography"
+      },
+      {
+        "type": "select",
+        "id": "heading_font",
+        "label": "Heading font",
+        "options": [
+          {
+            "value": "'Playfair Display', serif",
+            "label": "Playfair Display"
+          },
+          {
+            "value": "'Montserrat', sans-serif",
+            "label": "Montserrat"
+          },
+          {
+            "value": "'Poppins', sans-serif",
+            "label": "Poppins"
+          }
+        ],
+        "default": "'Playfair Display', serif"
+      },
+      {
+        "type": "select",
+        "id": "body_font",
+        "label": "Body font",
+        "options": [
+          {
+            "value": "'Poppins', sans-serif",
+            "label": "Poppins"
+          },
+          {
+            "value": "'Open Sans', sans-serif",
+            "label": "Open Sans"
+          },
+          {
+            "value": "'Lato', sans-serif",
+            "label": "Lato"
+          }
+        ],
+        "default": "'Poppins', sans-serif"
+      },
+      {
+        "type": "header",
+        "content": "Social media"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook",
+        "label": "Facebook",
+        "info": "https://facebook.com/yourpage"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram",
+        "info": "https://instagram.com/yourpage"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter",
+        "label": "Twitter",
+        "info": "https://twitter.com/yourpage"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest",
+        "label": "Pinterest",
+        "info": "https://pinterest.com/yourpage"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok",
+        "label": "TikTok",
+        "info": "https://tiktok.com/@yourpage"
+      },
+      {
+        "type": "header",
+        "content": "Announcement bar"
+      },
+      {
+        "type": "checkbox",
+        "id": "announcement_enabled",
+        "label": "Show announcement bar",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "announcement_text",
+        "label": "Text",
+        "default": "Free shipping on all orders over $50"
+      },
+      {
+        "type": "url",
+        "id": "announcement_link",
+        "label": "Link"
+      },
+      {
+        "type": "color",
+        "id": "announcement_bg",
+        "label": "Background color",
+        "default": "#8B5CF6"
+      },
+      {
+        "type": "color",
+        "id": "announcement_text_color",
+        "label": "Text color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "header",
+        "content": "Newsletter"
+      },
+      {
+        "type": "text",
+        "id": "newsletter_heading",
+        "label": "Heading",
+        "default": "Join Our Beauty Community"
+      },
+      {
+        "type": "text",
+        "id": "newsletter_subtext",
+        "label": "Subtext",
+        "default": "Get 15% off your first order and exclusive beauty tips"
+      },
+      {
+        "type": "color",
+        "id": "newsletter_bg",
+        "label": "Background color",
+        "default": "#F9F5FF"
+      },
+      {
+        "type": "header",
+        "content": "Product cards"
+      },
+      {
+        "type": "select",
+        "id": "product_image_aspect",
+        "label": "Image aspect ratio",
+        "options": [
+          {
+            "value": "natural",
+            "label": "Natural"
+          },
+          {
+            "value": "square",
+            "label": "Square (1:1)"
+          },
+          {
+            "value": "portrait",
+            "label": "Portrait (3:4)"
+          },
+          {
+            "value": "landscape",
+            "label": "Landscape (4:3)"
+          }
+        ],
+        "default": "portrait"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "label": "Show product vendor",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_quick_view",
+        "label": "Show quick view button",
+        "default": true
+      }
+    ]
+  }
+]
